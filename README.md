@@ -1,2 +1,3 @@
 # ts-express-1
-simple API made while studying typescript and express.js
+
+simple API made with typescript, express.js and Mongoose
