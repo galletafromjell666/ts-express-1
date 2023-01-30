@@ -18,6 +18,7 @@ const CreateBook = (req: Request, res: Response, next: NextFunction) => {
 const ReadBook = (req: Request, res: Response, next: NextFunction) => {
     const bookId = req.params.bookId;
     return Book.findById(bookId)
+        .populate('author')
         .then((book) => {
             return book ? res.status(200).json({ book }) : res.status(404).json({ message: 'Not found' });
         })
