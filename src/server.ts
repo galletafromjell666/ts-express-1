@@ -3,7 +3,8 @@ import http from 'http';
 import mongoose, { startSession } from 'mongoose';
 import { config } from './config/config';
 import Logging from './library/Logging';
-
+import authorRoutes from './routes/Author';
+import bookRoutes from './routes/Book';
 const router = express();
 
 // connect to mongo
@@ -26,7 +27,7 @@ const StartServer = () => {
         Logging.info(`Incomming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
 
         resp.on('finish', () => {
-            Logging.info(`Outcomming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}] - Status: [${resp.status}]`);
+            Logging.info(`Outcomming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}] - Status: [${resp.statusCode}]`);
         });
 
         next();
@@ -47,7 +48,8 @@ const StartServer = () => {
         next();
     });
     //Routes
-
+    router.use('/authors', authorRoutes);
+    router.use('/books', bookRoutes);
     //healthcheck
     router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));
 
